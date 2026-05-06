@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Light Theme (Default) ──────────────────────── */
+:root {
+  --bg: #f9fafb;
+  --bg-card: #ffffff;
+  --bg-nav: #ffffff;
+  --text: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --green: #16a34a;
+  --green-hover: #15803d;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.04);
+}
+
+/* ─── Dark Theme ─────────────────────────────────── */
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-nav: #0f172a;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --border: #334155;
+  --border-hover: #475569;
+  --green: #22c55e;
+  --green-hover: #16a34a;
+  --green-light: #14532d;
+  --blue: #60a5fa;
+  --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.4);
+}
+
+/* ─── Base ───────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* ─── Scrollbar hide ─────────────────────────────── */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ─── Animations ─────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeInUp 0.4s ease forwards; }
+.animate-in { animation: slideIn 0.35s ease forwards; }
+
+/* ─── Range input ────────────────────────────────── */
+input[type="range"] { accent-color: var(--green); }
+
+/* Keep default .text-white behavior so components that intentionally need white stay correct. */
+/* Do not override .text-white globally; instead, fix specific components where contrast was an issue. */
+
+/* Dropdown / select spacing: give room for native arrow and avoid clipping */
+select, .select-native {
+  padding-right: 3rem; /* leave more space for native arrow */
+  -webkit-appearance: menulist; /* keep native arrow */
+  appearance: auto;
+}
+
+/* Small responsive helpers */
+@media (max-width: 768px) {
+  .max-w-7xl, .max-w-6xl, .max-w-5xl, .max-w-4xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Ensure native select arrow isn't clipped on small cards */
+select.select-native, select {
+  /* move the native arrow further right so it doesn't overlap with padding */
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+}
+
+/* Friendly select style: subtle bg, visible border, spacing for arrow */
+.select-friendly {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0.5rem 2.25rem; /* vertical 0.5rem, horizontal leaves room for arrow */
+  color: var(--text);
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  min-height: 2.5rem;
+}
+
+.select-friendly:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 12%, transparent);
+  border-color: var(--blue);
+}
+
+/* Make doctor cards and main grids adjust on small screens */
+@media (max-width: 640px) {
+  .grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .md\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .lg\:grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .w-60 { width: 100% !important; }
+  aside[role] { position: static !important; }
+}
+
+/* Page wrapper gives consistent side padding on small devices so all pages are readable */
+.page-wrapper {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .page-wrapper { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .page-wrapper { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* A centered container for larger content blocks */
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Utility: make buttons full-width on small screens when applied */
+.btn-full-sm { width: auto; }
+@media (max-width: 640px) { .btn-full-sm { width: 100% !important; display: block; } }
+
+/* ─── Theme-aware utility overrides for commonly used Tailwind color classes ───────────────── */
+/* These override fixed Tailwind colors to use CSS variables so light/dark themes stay consistent */
+.bg-blue-600 { background-color: var(--blue) !important; }
+.bg-blue-500 { background-color: var(--blue) !important; }
+.hover\:bg-blue-500:hover { background-color: var(--blue) !important; }
+.text-blue-400 { color: var(--blue) !important; }
+.text-blue-300 { color: var(--blue) !important; }
+.border-blue-500 { border-color: var(--blue) !important; }
+.bg-blue-500\/10 { background-color: color-mix(in srgb, var(--blue) 10%, transparent) !important; }
+.bg-blue-600\/20 { background-color: color-mix(in srgb, var(--blue) 20%, transparent) !important; }
+.hover\:text-blue-300:hover { color: var(--blue) !important; }
+
+.bg-green-600 { background-color: var(--green) !important; }
+.text-green-400 { color: var(--green) !important; }
+.hover\:bg-green-500:hover { background-color: var(--green-hover) !important; }
+
+/* Additional opacity variants commonly used in the project */
+.bg-blue-600\/6 { background-color: color-mix(in srgb, var(--blue) 6%, transparent) !important; }
+.bg-blue-600\/5 { background-color: color-mix(in srgb, var(--blue) 5%, transparent) !important; }
+.bg-blue-600\/30 { background-color: color-mix(in srgb, var(--blue) 30%, transparent) !important; }
+.bg-blue-600\/20 { background-color: color-mix(in srgb, var(--blue) 20%, transparent) !important; }
+.border-blue-500\/20 { border-color: color-mix(in srgb, var(--blue) 20%, transparent) !important; }
+.border-blue-500\/30 { border-color: color-mix(in srgb, var(--blue) 30%, transparent) !important; }
+.hover\:shadow-blue-500\/20:hover { box-shadow: 0 10px 15px color-mix(in srgb, var(--blue) 20%, transparent) !important; }
+.bg-blue-600\/10 { background-color: color-mix(in srgb, var(--blue) 10%, transparent) !important; }
+.bg-blue-500\/20 { background-color: color-mix(in srgb, var(--blue) 20%, transparent) !important; }
+
+
+/* Fallback for any remaining explicit hex colors used in inline styles: prefer var values where practical */
+/* Add more overrides if you notice other fixed utility classes showing wrong colors. */
