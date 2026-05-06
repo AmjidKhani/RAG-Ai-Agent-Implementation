@@ -1,0 +1,19 @@
+# Node / Next
+node_modules/
+.next/
+dist/
+npm-debug.log
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+pip-wheel-metadata/
+*.log
+
+# OS
+.DS_Store
